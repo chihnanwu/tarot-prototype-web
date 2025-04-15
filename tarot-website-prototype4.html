@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>塔羅占卜 - 原型設計</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --secondary: #6f42c1;
+      --accent: #f1c40f;
+      --light: #f8f9fa;
+      --dark: #1a202c;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+    
+    body {
+      background-color: #f0f2f5;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .prototype-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .prototype-title {
+      text-align: center;
+      margin-bottom: 40px;
+      color: var(--secondary);
+    }
+    
+    .screen {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px var(--shadow);
+      margin-bottom: 50px;
+      overflow: hidden;
+    }
+    
+    .screen-title {
+      background: var(--primary);
+      color: white;
+      padding: 15px;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .screen-title i {
+      margin-right: 10px;
+    }
+    
+    .screen-content {
+      padding: 20px;
+    }
+    
+    /* Navigation */
+    .nav {
+      background: var(--primary);
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo i {
+      margin-right: 10px;
+      color: var(--accent);
+    }
+    
+    .nav-links {
+      display: flex;
+    }
+    
+    .nav-link {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+    }
+    
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(to right, rgba(44, 62, 80, 0.85), rgba(111, 66, 193, 0.85)), url('/api/placeholder/1200/400') center/cover;
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+    
+    .hero p {
+      font-size: 18px;
+      max-width: 700px;
+      margin: 0 auto 30px;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--accent);
+      color: var(--dark);
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Features */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 40px 0;
+    }
+    
+    .feature {
+      text-align: center;
+      padding: 30px;
+      border-radius: 8px;
+      background: white;
+      box-shadow: 0 4px 6px var(--shadow);
+      transition: all 0.3s ease;
+    }
+    
+    .feature:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px var(--shadow);
+    }
+    
+    .feature i {
+      font-size: 40px;
+      color: var(--secondary);
+      margin-bottom: 20px;
+    }
+    
+    /* Cards Section */
+    .cards-container {
+      perspective: 1000px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 40px 0;
+    }
+    
+    .tarot-card {
+      width: 120px;
+      height: 200px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+      cursor: pointer;
+    }
+    
+    .tarot-card:hover {
+      transform: scale(1.05);
+    }
+    
+    .tarot-card.flipped {
+      transform: rotateY(180deg);
+    }
+    
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px var(--shadow);
+    }
+    
+    .card-back {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .card-back i {
+      font-size: 40px;
+      color: var(--accent);
+    }
+    
+    .card-front {
+      background: white;
+      transform: rotateY(180deg);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+    }
+    
+    .card-img {
+      width: 80px;
+      height: 120px;
+      background-color: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+    }
+    
+    .card-name {
+      font-size: 12px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    
+    /* Spread Section */
+    .spread-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 40px 0;
+    }
+    
+    .spread-option {
+      border: 2px solid var(--secondary);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .spread-option:hover {
+      background: var(--secondary);
+      color: white;
+    }
+    
+    .spread-option i {
+      font-size: 30px;
+      margin-bottom: 15px;
+      color: var(--secondary);
+    }
+    
+    .spread-option:hover i {
+      color: white;
+    }
+    
+    /* Reading Result */
+    .reading-result {
+      background: linear-gradient(to right, #f6f0ff, #f0f8ff);
+      padding: 30px;
+      border-radius: 10px;
+      margin: 40px 0;
+    }
+    
+    .reading-title {
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--secondary);
+    }
+    
+    .reading-cards {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    
+    .reading-interpretation {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px var(--shadow);
+    }
+    
+    /* Card Library */
+    .card-library {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    
+    .library-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px var(--shadow);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .library-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px var(--shadow);
+    }
+    
+    .library-card-img {
+      height: 200px;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .library-card-info {
+      padding: 15px;
+      text-align: center;
+    }
+    
+    /* Account Section */
+    .account-section {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px var(--shadow);
+      overflow: hidden;
+    }
+    
+    .account-header {
+      background: var(--primary);
+      color: white;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .account-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--light);
+      margin-right: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .account-avatar i {
+      font-size: 30px;
+      color: var(--primary);
+    }
+    
+    .account-tabs {
+      display: flex;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .account-tab {
+      padding: 15px 20px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    
+    .account-tab.active {
+      border-bottom-color: var(--secondary);
+      color: var(--secondary);
+      font-weight: bold;
+    }
+    
+    .account-content {
+      padding: 20px;
+    }
+    
+    .history-item {
+      border-bottom: 1px solid #eee;
+      padding: 15px 0;
+      display: flex;
+      align-items: center;
+    }
+    
+    .history-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+    }
+    
+    /* Pro Services */
+    .service-card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 30px;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+    }
+    
+    .service-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 30px;
+      flex-shrink: 0;
+    }
+    
+    .service-icon i {
+      font-size: 40px;
+      color: var(--secondary);
+    }
+    
+    .service-details {
+      flex-grow: 1;
+    }
+    
+    .service-price {
+      display: flex;
+      align-items: baseline;
+      margin: 10px 0;
+    }
+    
+    .price-amount {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--secondary);
+    }
+    
+    .price-period {
+      margin-left: 5px;
+      color: #666;
+    }
+    
+    /* Footer */
+    .footer {
+      background: var(--primary);
+      color: white;
+      padding: 40px 20px 20px;
+      text-align: center;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    
+    .footer-link {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+    }
+    
+    .social-links {
+      margin: 20px 0;
+    }
+    
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background: var(--accent);
+      color: var(--dark);
+      transform: translateY(-3px);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .features {
+        grid-template-columns: 1fr;
+      }
+      
+      .spread-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .reading-cards {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .service-card {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .service-icon {
+        margin: 0 0 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="prototype-container">
+    <h1 class="prototype-title">塔羅牌網站原型設計</h1>
+    
+    <!-- 首頁 -->
+    <div class="screen">
+      <div class="screen-title">
+        <i class="fas fa-home"></i> 首頁
+      </div>
+      <div class="screen-content">
+        <div class="nav">
+          <div class="logo">
+            <i class="fas fa-moon"></i> 神秘塔羅
+          </div>
+          <div class="nav-links">
+            <a href="#" class="nav-link">首頁</a>
+            <a href="#" class="nav-link">占卜</a>
+            <a href="#" class="nav-link">塔羅牌庫</a>
+            <a href="#" class="nav-link">會員中心</a>
+            <a href="#" class="nav-link">登入/註冊</a>
+          </div>
+        </div>
+        
+        <div class="hero">
+          <h1>揭開生命的奧秘，探索心靈的智慧</h1>
+          <p>通過古老的塔羅智慧，尋找問題的答案，獲得靈性的指引。今天，讓塔羅牌為您揭示未知的可能性。</p>
+          <a href="#" class="btn">立即占卜</a>
+        </div>
+        
+        <div class="features">
+          <div class="feature">
+            <i class="fas fa-star"></i>
+            <h3>每日運勢</h3>
+            <p>每天抽一張牌，了解當日運勢走向，做好心理準備，把握良機。</p>
+          </div>
+          <div class="feature">
+            <i class="fas fa-magic"></i>
+            <h3>免費單卡占卜</h3>
+            <p>有問題需要解答？快速抽一張牌，獲得問題的指引和建議。</p>
+          </div>
+          <div class="feature">
+            <i class="fas fa-gem"></i>
+            <h3>多卡陣式占卜</h3>
+            <p>複雜的人生抉擇需要更深入的解析，嘗試專業的多卡陣式占卜。</p>
+          </div>
+        </div>
+        
+        <div class="footer">
+          <div class="logo">
+            <i class="fas fa-moon"></i> 神秘塔羅
+          </div>
+          <div class="footer-links">
+            <a href="#" class="footer-link">關於我們</a>
+            <a href="#" class="footer-link">使用條款</a>
+            <a href="#" class="footer-link">隱私政策</a>
+            <a href="#" class="footer-link">聯絡我們</a>
+          </div>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          </div>
+          <p>&copy; 2025 神秘塔羅. 保留所有權利。</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 單卡占卜頁 -->
+    <div class="screen">
+      <div class="screen-title">
+        <i class="fas fa-magic"></i> 單卡占卜頁
+      </div>
+      <div class="screen-content">
+        <div class="nav">
+          <div class="logo">
+            <i class="fas fa-moon"></i> 神秘塔羅
+          </div>
+          <div class="nav-links">
+            <a href="#" class="nav-link">首頁</a>
+            <a href="#" class="nav-link">占卜</a>
+            <a href="#" class="nav-link">塔羅牌庫</a>
+            <a href="#" class="nav-link">會員中心</a>
+            <a href="#" class="nav-link">登入/註冊</a>
+          </div>
+        </div>
+        
+        <div style="text-align: center; padding: 40px 20px;">
+          <h2>單卡占卜</h2>
+          <p style="max-width: 600px; margin: 20px auto;">
+            請在心中默想您的問題，然後點擊卡牌進行抽牌。一張塔羅牌將為您提供指引與啟示。
+          </p>
+          
+          <div class="cards-container">
+            <div class="tarot-card">
+              <div class="card-face card-back">
+                <i class="fas fa-moon"></i>
+              </div>
+              <div class="card-face card-front">
+                <div class="card-img">
+                  <i class="fas fa-sun" style="font-size: 50px; color: #f1c40f;"></i>
+                </div>
+                <div class="card-name">太陽</div>
+              </div>
+            </div>
+            <div class="tarot-card">
+              <div class="card-face card-back">
+                <i class="fas fa-moon"></i>
+              </div>
+              <div class="card-face card-front">
+                <div class="card-img">
+                  <i class="fas fa-star" style="font-size: 50px; color: #3498db;"></i>
+                </div>
+                <div class="card-name">星星</div>
+              </div>
+            </div>
+            <div class="tarot-card">
+              <div class="card-face card-back">
+                <i class="fas fa-moon"></i>
+              </div>
+              <div class="card-face card-front">
+                <div class="card-img">
+                  <i class="fas fa-moon" style="font-size: 50px; color: #9b59b6;"></i>
+                </div>
+                <div class="card-name">月亮</div>
+              </div>
+            </div>
+          </div>
+          
+          <p style="margin: 30px 0;">點擊上方的牌面進行抽牌</p>
+          
+          <div class="reading-result">
+            <h3 class="reading-title">您的占卜結果</h3>
+            <div class="reading-cards">
+              <div class="tarot-card" style="transform: rotateY(180deg);">
+                <div class="card-face card-back">
+                  <i class="fas fa-moon"></i>
+                </div>
+                <div class="card-face card-front">
+                  <div class="card-img">
+                    <i class="fas fa-sun" style="font-size: 50px; color: #f1c40f;"></i>
+                  </div>
+                  <div class="card-name">太陽</div>
+                </div>
+              </div>
+            </div>
+            <div class="reading-interpretation">
+              <h4>太陽牌詮釋</h4>
+              <p>太陽牌象徵著光明、喜悅與成功。這張牌出現表示您即將迎來一段充滿活力和希望的時期。困難將被克服，黑暗將被驅散，您的努力將得到回報。</p>
+              <p>在事業上，太陽預示著升遷或新的成功機會。在感情上，代表著幸福的關係和純粹的感情。總體而言，這是一張非常積極的牌，鼓勵您保持樂觀並繼續前行。</p>
+              <a href="#" class="btn" style="margin-top: 20px;">保存結果</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer">
+          <div class="logo">
+            <i class="fas fa-moon"></i> 神秘塔羅
+          </div>
+          <div class="footer-links">
+            <a href="#" class="footer-link">關於我們</a>
+            <a href="#" class="footer-link">使用條款</a>
+            <a href="#" class="footer-link">隱私政策</a>
+            <a href="#" class="footer-link">聯絡我們</a>
+          </div>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          </div>
+          <p>&copy; 2025 神秘塔羅. 保留所有權利。</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 多卡陣式選擇頁 -->
+    <div class="screen">
+      <div class="screen-title">
+        <i class="fas fa-gem"></i> 多卡陣式選擇頁
+      </div>
+      <div class="screen-content">
+        <div class="nav">
+          <div class="logo">
+            <i class="fas fa-moon"></i> 神秘塔羅
+          </div>
+          <div class="nav-links">
+            <a href="#" class="nav-link">首頁</a>
+            <a href="#" class="nav-link">占卜</a>
+            <a href="#" class="nav-link">塔羅牌庫</a>
+            <a href="#" class="nav-link">會員中心</a>
+            <a href="#" class="nav-link">登入/註冊</a>
+          </div>
+        </div>
+        
+        <div style="text-align: center; padding: 40px 20px;">
+          <h2>選擇塔羅牌陣</h2>
+          <p style="max-width: 600px; margin: 20px auto;">
+            不同的塔羅牌陣適合不同的問題。請選擇最適合您當前困惑的牌陣類型。
+          </p>
+          
+          <div class="spread-container">
+            <div class="spread-option">
+              <i class="fas fa-star"></i>
+              <h3>三卡牌陣</h3>
+              <p>過去、現在、未來</p>
+              <p>適合：了解情況發展</p>
+            </div>
+            <div class="spread-option">
+              <i class="fas fa-heart"></i>
+              <h3>關係牌陣</h3>
+              <p>五卡關係分析</p>
+              <p>適合：感情關係諮詢</p>
+            </div>
+            <div class="spread-option">
+              <i class="fas fa-cross"></i>
+              <h3>凱爾特十字陣</h3>
+              <p>十卡深度分析</p>
+              <p>適合：複雜問題分析</p>
+            </div>
+            <div class="spread-option">
+              <i class="fas fa-briefcase"></i>
+              <h3>事業牌陣</h3>
+              <p>六卡職業發展</p>
+              <p>適合：職業生涯規劃</p>
+            </div>
+            <div class="spread-option">
+              <i class="fas fa-compass"></i>
+              <h3>決策牌陣</h3>
+              <p>四卡選擇指引</p>
+              <p>適合：面臨抉擇時</p>
+            </div>
+            <div class="spread-option">
+              <i class="fas fa-user"></i>
+              <h3>自我探索牌陣</h3>
+              <p>七卡個人成長</p>
+              <p>適合：尋找自我定位</p>
+            </div>
+          </div>
+          
+          <h3 style="margin-top: 40px;">凱爾特十字陣展示</h3>
+          <div style="display: flex; justify-content: center; margin: 30px 0;">
+            <div style="position: relative; width: 400px; height: 400px;">
+              <!-- 模擬牌陣位置 - 標準凱爾特十字牌陣 -->
+              <!-- 中心牌 - 代表當前情況 -->
+              <div style="position: absolute; top: 130px; left: 150px; width: 100px; height: 160px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <span style="color: white;">1</span>
+              </div>
+              
+              <!-- 橫軸牌 -->
+              <!-- 覆蓋牌 - 代表阻礙 -->
+              <div style="position: absolute; top: 130px; left: 150px; width: 100px; height: 160px; transform: rotate(90deg); background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <span style="color: white; transform: rotate(-90deg);">2</span>
+              </div>
+              
+              <!-- 下方牌 - 代表過去 -->
+              <div style="position: absolute; top: 310px; left: 150px; width: 100px; height: 160px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <span style="color: white;">3</span>
+              </div>
+              
+              <!-- 左側牌 - 代表近期過去 -->
+              <div style="position: absolute; top: 130px; left: 30px; width: 100px; height: 160px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <span style="color: white;">4</span>
+              </div>
+              
+              <!-- 上方牌 - 代表可能的結果 -->
+              <div style="position: absolute; top: -50px; left: 150px; width: 100px; height: 160px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <span style="color: white;">5</span>
+              </div>
+              
+              <!-- 右側牌 - 代表近期未來 -->
+              <div style="position: absolute; top: 130px; left: 270px; width: 100px; height: 160px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <span style="color: white;">6</span>
+              </div>
+              
+              <!-- 右側豎列 - 從下到上 -->
+              <!-- 代表自己 -->
+              <div style="position: absolute; top: 310px; left: 270px; width: 100px; height: 160px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <span style="color: white;">7</span>
+              </div>
+              
+              <!-- 代表環境 -->
+              <div style="position: absolute; top: 200px; left: 270px; width: 100px; height: 160px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <span style="color: white;">8</span>
+              </div>
+              
+              <!-- 代表希望與恐懼 -->
+              <div style="position: absolute; top: 90px; left: 270px; width: 100px; height: 160px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <span style="color: white;">9</span>
+              </div>
+              
+              <!-- 代表最終結果 -->
+              <div style="position: absolute; top: -50px; left: 270px; width: 100px; height: 160px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <span style="color: white;">10</span>
+              </div>
+            </div>
+          </div>
+          
+          <div style="max-width: 800px; margin: 0 auto; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 6px var(--shadow);">
+            <h4>凱爾特十字牌陣含義:</h4>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 14px;">
+              <div>1. 當前情況</div>
+              <div>6. 近期未來</div>
+              <div>2. 挑戰/阻礙</div>
+              <div>7. 自己</div>
+              <div>3. 過去基礎</div>
+              <div>8. 外在環境</div>
+              <div>4. 近期過去</div>
+              <div>9. 希望與恐懼</div>
+              <div>5. 可能的結果</div>
+              <div>10. 最終結果</div>
+            </div>
+          </div>
+          
+          <a href="#" class="btn" style="margin-top: 20px;">開始占卜</a>
+        </div>
+        
+        <div class="footer">
+          <div class="logo">
+            <i class="fas fa-moon"></i> 神秘塔羅
+          </div>
+          <div class="footer-links">
+            <a href="#" class="footer-link">關於我們</a>
+            <a href="#" class="footer-link">使用條款</a>
+            <a href="#" class="footer-link">隱私政策</a>
+            <a href="#" class="footer-link">聯絡我們</a>
+          </div>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          </div>
+          <p>&copy; 2025 神秘塔羅. 保留所有權利。</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 塔羅牌詳解頁 -->
+    <div class="screen">
+      <div class="screen-title">
+        <i class="fas fa-book"></i> 塔羅牌詳解頁
+      </div>
+      <div class="screen-content">
+        <div class="nav">
+          <div class="logo">
+            <i class="fas fa-moon"></i> 神秘塔羅
+          </div>
+          <div class="nav-links">
+            <a href="#" class="nav-link">首頁</a>
+            <a href="#" class="nav-link">占卜</a>
+            <a href="#" class="nav-link">塔羅牌庫</a>
+            <a href="#" class="nav-link">會員中心</a>
+            <a href="#" class="nav-link">登入/註冊</a>
+          </div>
+        </div>
+        
+        <div style="padding: 40px 20px;">
+          <h2 style="text-align: center; margin-bottom: 30px;">塔羅牌庫</h2>
+          
+          <div style="max-width: 800px; margin: 0 auto;">
+            <div style="display: flex; margin-bottom: 30px;">
+              <div style="flex: 1;">
+                <input type="text" placeholder="搜尋塔羅牌..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+              </div>
+              <div style="margin-left: 10px;">
+                <select style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                  <option>所有牌組</option>
+                  <option>大阿爾卡納</option>
+                  <option>小阿爾卡納</option>
+                  <option>寶劍</option>
+                  <option>聖杯</option>
+                  <option>錢幣</option>
+                  <option>權杖</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card-library">
+            <div class="library-card">
+              <div class="library-card-img">
+                <i class="fas fa-sun" style="font-size: 60px; color: #f1c40f;"></i>
+              </div>
+              <div class="library-card-info">
+                <h4>太陽</h4>
+                <p>大阿爾卡納</p>
+              </div>
+            </div>
+            <div class="library-card">
+              <div class="library-card-img">
+                <i class="fas fa-moon" style="font-size: 60px; color: #9b59b6;"></i>
+              </div>
+              <div class="library-card-info">
+                <h4>月亮</h4>
+                <p>大阿爾卡納</p>
+              </div>
+            </div>
+            <div class="library-card">
+              <div class="library-card-img">
+                <i class="fas fa-star" style="font-size: 60px; color: #3498db;"></i>
+              </div>
+              <div class="library-card-info">
+                <h4>星星</h4>
+                <p>大阿爾卡納</p>
+              </div>
+            </div>
+            <div class="library-card">
+              <div class="library-card-img">
+                <i class="fas fa-tower-observation" style="font-size: 60px; color: #e74c3c;"></i>
+              </div>
+              <div class="library-card-info">
+                <h4>塔</h4>
+                <p>大阿爾卡納</p>
+              </div>
+            </div>
+            <div class="library-card">
+              <div class="library-card-img">
+                <i class="fas fa-balance-scale" style="font-size: 60px; color: #1abc9c;"></i>
+              </div>
+              <div class="library-card-info">
+                <h4>正義</h4>
+                <p>大阿爾卡納</p>
+              </div>
+            </div>
+            <div class="library-card">
+              <div class="library-card-img">
+                <i class="fas fa-skull" style="font-size: 60px; color: #34495e;"></i>
+              </div>
+              <div class="library-card-info">
+                <h4>死神</h4>
+                <p>大阿爾卡納</p>
+              </div>
+            </div>
+            <div class="library-card">
+              <div class="library-card-img">
+                <i class="fas fa-hat-wizard" style="font-size: 60px; color: #8e44ad;"></i>
+              </div>
+              <div class="library-card-info">
+                <h4>魔術師</h4>
+                <p>大阿爾卡納</p>
+              </div>
+            </div>
+            <div class="library-card">
+              <div class="library-card-img">
+                <i class="fas fa-chess-queen" style="font-size: 60px; color: #d35400;"></i>
+              </div>
+              <div class="library-card-info">
+                <h4>皇后</h4>
+                <p>大阿爾卡納</p>
+              </div>
+            </div>
+          </div>
+          
+          <div style="max-width: 800px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px var(--shadow);">
+            <div style="display: flex; align-items: center; margin-bottom: 30px;">
+              <div style="width: 150px; height: 250px; background: linear-gradient(135deg, #f1c40f, #f39c12); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-right: 30px;">
+                <i class="fas fa-sun" style="font-size: 80px; color: white;"></i>
+              </div>
+              <div>
+                <h2>太陽 (The Sun)</h2>
+                <p>大阿爾卡納 · 第19張牌</p>
+                <div style="display: flex; margin-top: 15px;">
+                  <span style="background: var(--secondary); color: white; padding: 5px 10px; border-radius: 20px; margin-right: 10px; font-size: 14px;">成功</span>
+                  <span style="background: var(--secondary); color: white; padding: 5px 10px; border-radius: 20px; margin-right: 10px; font-size: 14px;">快樂</span>
+                  <span style="background: var(--secondary); color: white; padding: 5px 10px; border-radius: 20px; font-size: 14px;">積極</span>
+                </div>
+              </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+              <h3>象徵意義</h3>
+              <p>太陽牌象徵著成功、喜悅、豐盛和能量。它代表著黑暗之後的光明，是希望和樂觀的象徵。太陽的強大能量能夠驅散一切陰霾，帶來生機和活力。</p>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+              <h3>正位解讀</h3>
+              <p>正位太陽牌表示您正處於一個充滿活力和喜悅的時期。困難已經過去，您將迎來成功和滿足。這是實現目標、獲得成就的時期，內心充滿自信和樂觀。</p>
+              <p>在事業上，預示著晉升、成功或新的機會。在感情上，代表著幸福的關係和純真的愛情。在健康方面，表示恢復活力和精力充沛。</p>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+              <h3>逆位解讀</h3>
+              <p>逆位太陽牌表示您可能因為某些原因無法充分體驗到生活的快樂和成功。可能是因為自我懷疑，或者外部環境的阻礙，使您的光芒暫時被遮蓋。</p>
+              <p>在事業上，可能面臨延遲或阻礙。在感情上，可能有溝通不良或期望過高的問題。在健康方面，可能感到精力不足或情緒低落。</p>
+            </div>
+            
+            <div>
+              <h3>關鍵詞</h3>
+              <div style="display: flex; flex-wrap: wrap; margin-top: 10px;">
+                <div style="width: 50%; margin-bottom: 10px;">
+                  <strong>正位:</strong> 成功、喜悅、滿足、活力、光明
+                </div>
+                <div style="width: 50%; margin-bottom: 10px;">
+                  <strong>逆位:</strong> 阻礙、挫折、缺乏自信、情緒低落
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer">
+          <div class="logo">
+            <i class="fas fa-moon"></i> 神秘塔羅
+          </div>
+          <div class="footer-links">
+            <a href="#" class="footer-link">關於我們</a>
+            <a href="#" class="footer-link">使用條款</a>
+            <a href="#" class="footer-link">隱私政策</a>
+            <a href="#" class="footer-link">聯絡我們</a>
+          </div>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          </div>
+          <p>&copy; 2025 神秘塔羅. 保留所有權利。</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 個人中心 -->
+    <div class="screen">
+      <div class="screen-title">
+        <i class="fas fa-user"></i> 個人中心
+      </div>
+      <div class="screen-content">
+        <div class="nav">
+          <div class="logo">
+            <i class="fas fa-moon"></i> 神秘塔羅
+          </div>
+          <div class="nav-links">
+            <a href="#" class="nav-link">首頁</a>
+            <a href="#" class="nav-link">占卜</a>
+            <a href="#" class="nav-link">塔羅牌庫</a>
+            <a href="#" class="nav-link">會員中心</a>
+            <a href="#" class="nav-link">登入/註冊</a>
+          </div>
+        </div>
+        
+        <div style="max-width: 900px; margin: 40px auto;">
+          <div class="account-section">
+            <div class="account-header">
+              <div class="account-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div>
+                <h2>李星辰</h2>
+                <p>會員等級: 高級會員</p>
+              </div>
+            </div>
+            
+            <div class="account-tabs">
+              <div class="account-tab active">占卜記錄</div>
+              <div class="account-tab">個人設置</div>
+              <div class="account-tab">訂閱管理</div>
+              <div class="account-tab">收藏牌組</div>
+            </div>
+            
+            <div class="account-content">
+              <h3 style="margin-bottom: 20px;">我的占卜記錄</h3>
+              
+              <div class="history-item">
+                <div class="history-icon">
+                  <i class="fas fa-star"></i>
+                </div>
+                <div>
+                  <h4>三卡牌陣: 事業發展</h4>
+                  <p>2025年4月10日 08:30</p>
+                  <p>牌組: 太陽、命運之輪、星星</p>
+                </div>
+                <div style="margin-left: auto;">
+                  <a href="#" style="color: var(--secondary);">查看詳情</a>
+                </div>
+              </div>
+              
+              <div class="history-item">
+                <div class="history-icon">
+                  <i class="fas fa-heart"></i>
+                </div>
+                <div>
+                  <h4>關係牌陣: 感情分析</h4>
+                  <p>2025年4月5日 21:15</p>
+                  <p>牌組: 戀人、聖杯皇后、月亮、寶劍騎士、隱士</p>
+                </div>
+                <div style="margin-left: auto;">
+                  <a href="#" style="color: var(--secondary);">查看詳情</a>
+                </div>
+              </div>
+              
+              <div class="history-item">
+                <div class="history-icon">
+                  <i class="fas fa-magic"></i>
+                </div>
+                <div>
+                  <h4>單卡占卜: 每日指引</h4>
+                  <p>2025年4月1日 06:45</p>
+                  <p>牌組: 力量</p>
+                </div>
+                <div style="margin-left: auto;">
+                  <a href="#" style="color: var(--secondary);">查看詳情</a>
+                </div>
+              </div>
+              
+              <div style="text-align: center; margin-top: 30px;">
+                <a href="#" class="btn">查看更多記錄</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer">
+          <div class="logo">
+            <i class="fas fa-moon"></i> 神秘塔羅
+          </div>
+          <div class="footer-links">
+            <a href="#" class="footer-link">關於我們</a>
+            <a href="#" class="footer-link">使用條款</a>
+            <a href="#" class="footer-link">隱私政策</a>
+            <a href="#" class="footer-link">聯絡我們</a>
+          </div>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          </div>
+          <p>&copy; 2025 神秘塔羅. 保留所有權利。</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 專業解讀服務頁 -->
+    <div class="screen">
+      <div class="screen-title">
+        <i class="fas fa-crown"></i> 專業解讀服務頁
+      </div>
+      <div class="screen-content">
+        <div class="nav">
+          <div class="logo">
+            <i class="fas fa-moon"></i> 神秘塔羅
+          </div>
+          <div class="nav-links">
+            <a href="#" class="nav-link">首頁</a>
+            <a href="#" class="nav-link">占卜</a>
+            <a href="#" class="nav-link">塔羅牌庫</a>
+            <a href="#" class="nav-link">會員中心</a>
+            <a href="#" class="nav-link">登入/註冊</a>
+          </div>
+        </div>
+        
+        <div style="text-align: center; padding: 40px 20px;">
+          <h2>專業塔羅解讀服務</h2>
+          <p style="max-width: 600px; margin: 20px auto;">
+            我們的專業塔羅占卜師將為您提供深入、詳細的塔羅牌解讀。無論您面臨什麼樣的人生困惑，我們都能為您帶來啟示與指引。
+          </p>
+          
+          <div style="max-width: 800px; margin: 40px auto;">
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-comment-dots"></i>
+              </div>
+              <div class="service-details">
+                <h3>文字占卜解讀</h3>
+                <p>通過文字形式獲得專業塔羅師的詳細解讀。您提出問題，我們的塔羅師會在24小時內返回詳細的分析報告。</p>
+                <div class="service-price">
+                  <span class="price-amount">NT$299</span>
+                  <span class="price-period">/ 次</span>
+                </div>
+                <a href="#" class="btn">立即購買</a>
+              </div>
+            </div>
+            
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-video"></i>
+              </div>
+              <div class="service-details">
+                <h3>視訊一對一占卜</h3>
+                <p>與專業塔羅師進行30分鐘的視訊諮詢，可以提問多個問題，獲得即時的互動解讀和建議。</p>
+                <div class="service-price">
+                  <span class="price-amount">NT$699</span>
+                  <span class="price-period">/ 30分鐘</span>
+                </div>
+                <a href="#" class="btn">預約時間</a>
+              </div>
+            </div>
+            
+            <div class="service-card">
+              <div class="service-icon">
+                <i class="fas fa-gem"></i>
+              </div>
+              <div class="service-details">
+                <h3>高級訂閱服務</h3>
+                <p>每月獲得3次文字占卜和1次視訊諮詢的機會，加上專屬的每週運勢分析和生日特別解讀。</p>
+                <div class="service-price">
+                  <span class="price-amount">NT$1,299</span>
+                  <span class="price-period">/ 月</span>
+                </div>
+                <a href="#" class="btn">訂閱方案</a>
+              </div>
+            </div>
+          </div>
+          
+          <div style="background: var(--light); padding: 30px; border-radius: 10px; max-width: 800px; margin: 40px auto; text-align: left;">
+            <h3 style="text-align: center; margin-bottom: 20px;">我們的塔羅師</h3>
+            
+            <div style="display: flex; margin-bottom: 30px;">
+              <div style="width: 80px; height: 80px; border-radius: 50%; background: #f0f0f0; margin-right: 20px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-user" style="font-size: 40px; color: var(--primary);"></i>
+              </div>
+              <div>
+                <h4>艾瑪 · 星辰</h4>
+                <p style="color: var(--secondary);">資深塔羅占卜師 · 15年經驗</p>
+                <p>專長於關係、事業和人生方向的解讀，擅長凱爾特十字牌陣和關係牌陣的分析。</p>
+              </div>
+            </div>
+            
+            <div style="display: flex; margin-bottom: 30px;">
+              <div style="width: 80px; height: 80px; border-radius: 50%; background: #f0f0f0; margin-right: 20px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-user" style="font-size: 40px; color: var(--primary);"></i>
+              </div>
+              <div>
+                <h4>傑森 · 月光</h4>
+                <p style="color: var(--secondary);">直覺型塔羅占卜師 · 10年經驗</p>
+                <p>擅長靈性成長和自我探索的指引，特別善於解讀大阿爾卡納牌的深層含義。</p>
+              </div>
+            </div>
+            
+            <div style="display: flex;">
+              <div style="width: 80px; height: 80px; border-radius: 50%; background: #f0f0f0; margin-right: 20px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-user" style="font-size: 40px; color: var(--primary);"></i>
+              </div>
+              <div>
+                <h4>莉莉 · 水晶</h4>
+                <p style="color: var(--secondary);">療癒型塔羅占卜師 · 8年經驗</p>
+                <p>專注於心靈療癒和情感疏導，擅長結合塔羅牌與其他能量療法，提供全面的指引。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer">
+          <div class="logo">
+            <i class="fas fa-moon"></i> 神秘塔羅
+          </div>
+          <div class="footer-links">
+            <a href="#" class="footer-link">關於我們</a>
+            <a href="#" class="footer-link">使用條款</a>
+            <a href="#" class="footer-link">隱私政策</a>
+            <a href="#" class="footer-link">聯絡我們</a>
+          </div>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          </div>
+          <p>&copy; 2025 神秘塔羅. 保留所有權利。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

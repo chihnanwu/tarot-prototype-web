@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>多卡陣式 - 神秘塔羅</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="logo">
+        <i class="fas fa-moon"></i> 神秘塔羅
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">首頁</a>
+        <a href="single-card.html" class="nav-link">單卡占卜</a>
+        <a href="spreads.html" class="nav-link">多卡陣式</a>
+        <a href="library.html" class="nav-link">塔羅牌庫</a>
+        <a href="account.html" class="nav-link">會員中心</a>
+        <a href="login.html" class="nav-link">登入/註冊</a>
+      </div>
+    </div>
+    
+    <div style="text-align: center; padding: 40px 20px;">
+      <h2 class="page-header">選擇塔羅牌陣</h2>
+      <p class="page-description">
+        不同的塔羅牌陣適合不同的問題。請選擇最適合您當前困惑的牌陣類型。
+      </p>
+      
+      <div class="spread-container">
+        <div class="spread-option">
+          <i class="fas fa-star"></i>
+          <h3>三卡牌陣</h3>
+          <p>過去、現在、未來</p>
+          <p>適合：了解情況發展</p>
+        </div>
+        <div class="spread-option">
+          <i class="fas fa-heart"></i>
+          <h3>關係牌陣</h3>
+          <p>五卡關係分析</p>
+          <p>適合：感情關係諮詢</p>
+        </div>
+        <div class="spread-option">
+          <i class="fas fa-cross"></i>
+          <h3>凱爾特十字陣</h3>
+          <p>十卡深度分析</p>
+          <p>適合：複雜問題分析</p>
+        </div>
+        <div class="spread-option">
+          <i class="fas fa-briefcase"></i>
+          <h3>事業牌陣</h3>
+          <p>六卡職業發展</p>
+          <p>適合：職業生涯規劃</p>
+        </div>
+        <div class="spread-option">
+          <i class="fas fa-compass"></i>
+          <h3>決策牌陣</h3>
+          <p>四卡選擇指引</p>
+          <p>適合：面臨抉擇時</p>
+        </div>
+        <div class="spread-option">
+          <i class="fas fa-user"></i>
+          <h3>自我探索牌陣</h3>
+          <p>七卡個人成長</p>
+          <p>適合：尋找自我定位</p>
+        </div>
+      </div>
+      
+      <div id="spread-details" style="margin-top: 50px;">
+        <h3 style="margin-bottom: 30px;">凱爾特十字陣展示</h3>
+        <div class="celtic-cross">
+          <!-- 中心牌 - 代表當前情況 -->
+          <div class="position" style="top: 130px; left: 150px;">1</div>
+          
+          <!-- 覆蓋牌 - 代表阻礙 -->
+          <div class="position" style="top: 130px; left: 150px; transform: rotate(90deg);">2</div>
+          
+          <!-- 下方牌 - 代表過去 -->
+          <div class="position" style="top: 310px; left: 150px;">3</div>
+          
+          <!-- 左側牌 - 代表近期過去 -->
+          <div class="position" style="top: 130px; left: 30px;">4</div>
+          
+          <!-- 上方牌 - 代表可能的結果 -->
+          <div class="position" style="top: -50px; left: 150px;">5</div>
+          
+          <!-- 右側牌 - 代表近期未來 -->
+          <div class="position" style="top: 130px; left: 270px;">6</div>
+          
+          <!-- 右側豎列 - 從下到上 -->
+          <!-- 代表自己 -->
+          <div class="position" style="top: 310px; left: 270px;">7</div>
+          
+          <!-- 代表環境 -->
+          <div class="position" style="top: 200px; left: 270px;">8</div>
+          
+          <!-- 代表希望與恐懼 -->
+          <div class="position" style="top: 90px; left: 270px;">9</div>
+          
+          <!-- 代表最終結果 -->
+          <div class="position" style="top: -50px; left: 270px;">10</div>
+        </div>
+          
+        <div style="max-width: 800px; margin: 20px auto; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 6px var(--shadow);">
+          <h4>凱爾特十字牌陣含義:</h4>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 14px; margin-top: 10px;">
+            <div>1. 當前情況</div>
+            <div>6. 近期未來</div>
+            <div>2. 挑戰/阻礙</div>
+            <div>7. 自己</div>
+            <div>3. 過去基礎</div>
+            <div>8. 外在環境</div>
+            <div>4. 近期過去</div>
+            <div>9. 希望與恐懼</div>
+            <div>5. 可能的結果</div>
+            <div>10. 最終結果</div>
+          </div>
+        </div>
+      </div>
+      
+      <a href="celtic-cross.html" class="btn" style="margin-top: 20px;">開始凱爾特十字牌陣占卜</a>
+      
+      <!-- 添加三卡牌陣的链接 -->
+      <a href="three-card.html" class="btn" style="margin-top: 20px; margin-left: 15px;">開始三卡牌陣占卜</a>
+      
+      <div style="margin-top: 60px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 6px var(--shadow); max-width: 800px; margin-left: auto; margin-right: auto; text-align: left;">
+        <h3 style="text-align: center; margin-bottom: 20px;">如何選擇適合您的牌陣</h3>
+        <p>選擇合適的塔羅牌陣是獲得有效解讀的關鍵。以下是一些建議：</p>
+        <ul style="margin-top: 15px; line-height: 1.8;">
+          <li><strong>考慮您的問題性質</strong> - 感情問題適合關係牌陣，職業困惑則選擇事業牌陣。</li>
+          <li><strong>評估問題的複雜度</strong> - 簡單的問題可能只需要單卡或三卡牌陣，而複雜的問題則需要凱爾特十字牌陣等多卡分析。</li>
+          <li><strong>考慮您的時間和精力</strong> - 多卡牌陣解讀需要更多時間和精力投入，確保您有足夠的時間進行深入思考。</li>
+          <li><strong>初學者建議</strong> - 如果您是塔羅初學者，可以從三卡牌陣開始，逐步嘗試更複雜的牌陣。</li>
+        </ul>
+        <p style="margin-top: 20px;">無論選擇哪種牌陣，最重要的是保持開放的心態，相信塔羅牌會給您提供所需的指引。</p>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <div class="logo">
+        <i class="fas fa-moon"></i> 神秘塔羅
+      </div>
+      <div class="footer-links">
+        <a href="#" class="footer-link">關於我們</a>
+        <a href="#" class="footer-link">使用條款</a>
+        <a href="#" class="footer-link">隱私政策</a>
+        <a href="#" class="footer-link">聯絡我們</a>
+      </div>
+      <div class="social-links">
+        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+      </div>
+      <p>&copy; 2025 神秘塔羅. 保留所有權利。</p>
+    </div>
+  </div>
+  
+  <script src="assets/js/main.js"></script>
+  <script>
+    // 塔羅牌陣选择后显示对应详情
+    document.addEventListener('DOMContentLoaded', function() {
+      const spreadOptions = document.querySelectorAll('.spread-option');
+      const spreadDetails = document.getElementById('spread-details');
+      const startButton = document.querySelector('.btn');
+      
+      spreadOptions.forEach(option => {
+        option.addEventListener('click', function() {
+          const spreadName = this.querySelector('h3').textContent;
+          // 更新开始按钮的链接
+          startButton.textContent = `開始${spreadName}占卜`;
+          startButton.href = `${spreadName.replace(/\s+/g, '-').toLowerCase()}.html`;
+          
+          // 可以在这里添加更新展示内容的逻辑
+          // 例如根据不同的牌陣展示不同的布局和说明
+        });
+      });
+    });
+  </script>
+</body>
+</html> 
