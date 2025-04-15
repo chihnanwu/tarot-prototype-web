@@ -2,29 +2,12 @@
   "name": "tarot-prototype",
   "version": "1.0.0",
   "description": "基於HTML、CSS和JavaScript開發的塔羅牌占卜網站原型",
-  "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0",
-    "start": "serve -s .",
-    "build": "echo \"No build required\""
+    "test": "echo \"No tests required\" && exit 0",
+    "build": "echo \"No build required\" && exit 0",
+    "start": "echo \"Static website - no server required\""
   },
-  "keywords": [
-    "tarot",
-    "塔羅",
-    "占卜",
-    "靜態網站"
-  ],
   "author": "神秘塔羅團隊",
   "license": "UNLICENSED",
-  "private": true,
-  "dependencies": {
-    "serve": "^14.2.1"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/user/tarot-prototype"
-  }
+  "private": true
 } 
