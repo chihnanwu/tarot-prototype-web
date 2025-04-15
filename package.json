@@ -4,7 +4,8 @@
   "description": "基於HTML、CSS和JavaScript開發的塔羅牌占卜網站原型",
   "scripts": {
     "test": "echo \"No tests required\" && exit 0",
-    "build": "echo \"No build required\" && exit 0",
+    "build": "echo \"Static website build complete\"",
+    "build:azure": "echo \"Static website build complete\"",
     "start": "echo \"Static website - no server required\""
   },
   "author": "神秘塔羅團隊",
